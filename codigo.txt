@@ -1,0 +1,329 @@
+#include <Servo.h> 
+// C++ code
+//
+
+
+#define G 8
+#define F 9
+#define A 10
+#define B 11
+#define E 7
+#define D 6
+#define C 5
+#define DP 4
+
+#define LED_ROJO_UNO 13
+#define LED_ROJO_DOS 12
+
+#define BOTON_UNO 0
+#define BOTON_DOS 1
+
+#define SERVOPIN 3
+
+int posicion = 0; //defino la posicion del servo
+
+int temperatura;
+int lecturaDelSensor;
+int contador = 0;
+bool estadoBotonUno = LOW;
+bool estadoBotonDos = LOW;
+bool activo = true;
+
+int tiempo;
+void EncenderCero(int tiempo);
+void EncenderUno(int tiempo);
+void EncenderDos(int tiempo);
+void EncenderTres(int tiempo);
+void EncenderCuatro(int tiempo);
+void EncenderCinco(int tiempo);
+void EncenderSeis(int tiempo);
+void EncenderSiete(int tiempo);
+void EncenderOcho(int tiempo);
+void EncenderNueve(int tiempo);
+void ApagarTodos(int tiempo);
+void MoverServo(int posicion);
+Servo servo1;
+
+
+void setup()
+{
+  pinMode(LED_BUILTIN, OUTPUT);
+  
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(9, OUTPUT);
+  pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
+  
+  pinMode(BOTON_UNO, INPUT);
+  pinMode(BOTON_DOS, INPUT);
+  
+  servo1.attach(SERVOPIN); 
+  
+  Serial.begin(9600);
+  
+}
+
+void loop()
+{
+	bool nuevoEstadoBotonUno = digitalRead(BOTON_UNO);
+    bool nuevoEstadoBotonDos = digitalRead(BOTON_DOS);
+
+    if (nuevoEstadoBotonUno == HIGH && estadoBotonUno == LOW) {
+      	contador++;
+        delay(200); 
+    }
+    estadoBotonUno = nuevoEstadoBotonUno;
+
+    if(nuevoEstadoBotonDos == HIGH && estadoBotonDos == LOW) {
+      	contador = 0;
+        ApagarTodos(200);
+        delay(200);
+    }
+    estadoBotonDos = nuevoEstadoBotonDos;
+
+    if (contador > 0) {
+        lecturaDelSensor = analogRead(A0);
+        temperatura = map(lecturaDelSensor, 20, 358, -40, 125);
+        
+        if (temperatura < 30) 
+        {
+            EncenderCero(1000);
+        } 
+      	else if (temperatura > 29 && temperatura < 35) {
+            EncenderUno(1000);
+        } 
+      	else if (temperatura > 34 && temperatura < 40) {
+            EncenderDos(1000);
+        } 
+      	else if (temperatura > 39 && temperatura < 45) {
+            EncenderTres(1000);
+        } 
+      	else if (temperatura > 44 && temperatura < 50) {
+            EncenderCuatro(1000);
+        } 
+      	else if (temperatura > 49 && temperatura < 55) {
+            EncenderCinco(1000);
+        } 
+      	else if (temperatura > 54 && temperatura < 60) {
+            EncenderSeis(1000);
+        } 
+      	else if (temperatura > 59 && temperatura < 65) {
+            EncenderSiete(500);
+          	EncenderLed(500);
+          	MoverServo(90);
+          	
+        } 
+      	else if (temperatura > 64 && temperatura < 70) {
+            EncenderOcho(500);
+          	EncenderLed(500);
+          	MoverServo(90);
+          	
+        } 
+      	else {
+            EncenderNueve(500);
+          	EncenderLed(500);
+          	MoverServo(90);
+        }
+      
+    
+    }
+  if (contador == 0) {
+    digitalWrite(F, LOW);
+    digitalWrite(A, LOW);
+    digitalWrite(B, LOW);
+    digitalWrite(E, LOW);
+    digitalWrite(D, LOW);
+    digitalWrite(C, LOW);
+    digitalWrite(G, LOW);
+    digitalWrite(13, LOW);
+    digitalWrite(12, LOW);
+  }
+  
+}
+
+
+void MoverServo(int posicion)
+{
+  for (posicion = 0; posicion <= 180;)
+  {
+  	servo1.write(posicion);
+    delay(30);
+  }
+}
+
+
+void EncenderLed(int tiempo)
+{
+  digitalWrite(13, HIGH);
+  digitalWrite(12, HIGH);
+  delay(tiempo);
+  digitalWrite(13, LOW);
+  digitalWrite(12, LOW);
+  delay(tiempo);
+}
+
+void EncenderCero(int tiempo)
+{
+  digitalWrite(F, HIGH);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(C, HIGH);
+  delay(tiempo);
+  digitalWrite(F, LOW);
+  digitalWrite(A, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(C, LOW);
+}
+
+void EncenderUno(int tiempo)
+{
+  digitalWrite(C, HIGH);
+  digitalWrite(B, HIGH);
+  delay(tiempo);
+  digitalWrite(C, LOW);
+  digitalWrite(B, LOW);
+}
+
+void EncenderDos(int tiempo)
+{
+  digitalWrite(G, HIGH);
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(D, HIGH);
+  delay(tiempo);
+  digitalWrite(G, LOW);
+  digitalWrite(A, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(D, LOW);
+}
+
+void EncenderTres(int tiempo)
+{
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(G, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(D, HIGH);
+  delay(tiempo);
+  digitalWrite(A, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(G, LOW);
+  digitalWrite(C, LOW);
+  digitalWrite(D, LOW);
+}
+
+void EncenderCuatro(int tiempo)
+{
+  digitalWrite(C, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  delay(tiempo);
+  digitalWrite(C, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(G, LOW);
+  digitalWrite(F, LOW);
+}
+
+void EncenderCinco(int tiempo)
+{
+  digitalWrite(C, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(A, HIGH);
+  delay(tiempo);
+  digitalWrite(C, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(G, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(A, LOW);
+}
+
+void EncenderSeis(int tiempo)
+{
+  digitalWrite(C, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(A, HIGH);
+  digitalWrite(E, HIGH);
+  delay(tiempo);
+  digitalWrite(C, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(G, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(A, LOW);
+  digitalWrite(E, LOW);
+}
+
+void EncenderSiete(int tiempo)
+{
+  digitalWrite(C, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(A, HIGH);
+  delay(tiempo);
+  digitalWrite(C, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(A, LOW);
+}
+
+void EncenderOcho(int tiempo)
+{
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(G, HIGH);
+  delay(tiempo);
+  digitalWrite(A, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(C, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(G, LOW);
+}
+
+void EncenderNueve(int tiempo)
+{
+  digitalWrite(C, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(G, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(A, HIGH);
+  delay(tiempo);
+  digitalWrite(C, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(G, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(A, LOW);
+}
+
+void ApagarTodos(int tiempo) 
+{
+    digitalWrite(F, LOW);
+    digitalWrite(A, LOW);
+    digitalWrite(B, LOW);
+    digitalWrite(E, LOW);
+    digitalWrite(D, LOW);
+    digitalWrite(C, LOW);
+    digitalWrite(G, LOW);
+    digitalWrite(13, LOW);
+    digitalWrite(12, LOW);
+}
