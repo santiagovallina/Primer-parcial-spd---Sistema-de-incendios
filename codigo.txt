@@ -75,75 +75,76 @@ void loop()
 	bool nuevoEstadoBotonUno = digitalRead(BOTON_UNO);
     bool nuevoEstadoBotonDos = digitalRead(BOTON_DOS);
 
-    if (nuevoEstadoBotonUno == HIGH && estadoBotonUno == LOW) {
-      	contador++;
-        delay(200); 
+    if (nuevoEstadoBotonUno == HIGH && estadoBotonUno == LOW) 
+    {
+      contador++;
+      delay(200); 
     }
     estadoBotonUno = nuevoEstadoBotonUno;
 
-    if(nuevoEstadoBotonDos == HIGH && estadoBotonDos == LOW) {
-      	contador = 0;
-        ApagarTodos(200);
-        delay(200);
+    if(nuevoEstadoBotonDos == HIGH && estadoBotonDos == LOW) 
+    {
+      contador = 0;
+      ApagarTodos(200);
+      delay(200);
     }
     estadoBotonDos = nuevoEstadoBotonDos;
 
-    if (contador > 0) {
-        lecturaDelSensor = analogRead(A0);
-        temperatura = map(lecturaDelSensor, 20, 358, -40, 125);
+    if (contador > 0) 
+    {
+       lecturaDelSensor = analogRead(A0);
+       temperatura = map(lecturaDelSensor, 20, 358, -40, 125);
         
-        if (temperatura < 30) 
+       if (temperatura < 30) 
         {
-            EncenderCero(1000);
+           EncenderCero(1000);
         } 
-      	else if (temperatura > 29 && temperatura < 35) {
-            EncenderUno(1000);
+      	else if (temperatura > 29 && temperatura < 35) 
+        {
+           EncenderUno(1000);
         } 
-      	else if (temperatura > 34 && temperatura < 40) {
-            EncenderDos(1000);
+      	else if (temperatura > 34 && temperatura < 40) 
+        {
+           EncenderDos(1000);
         } 
-      	else if (temperatura > 39 && temperatura < 45) {
-            EncenderTres(1000);
+      	else if (temperatura > 39 && temperatura < 45) 
+        {
+           EncenderTres(1000);
         } 
-      	else if (temperatura > 44 && temperatura < 50) {
-            EncenderCuatro(1000);
+      	else if (temperatura > 44 && temperatura < 50) 
+        {
+           EncenderCuatro(1000);
         } 
-      	else if (temperatura > 49 && temperatura < 55) {
-            EncenderCinco(1000);
+      	else if (temperatura > 49 && temperatura < 55) 
+        {
+           EncenderCinco(1000);
         } 
-      	else if (temperatura > 54 && temperatura < 60) {
-            EncenderSeis(1000);
+      	else if (temperatura > 54 && temperatura < 60) 
+        {
+           EncenderSeis(1000);
         } 
-      	else if (temperatura > 59 && temperatura < 65) {
-            EncenderSiete(500);
-          	EncenderLed(500);
-          	MoverServo(90);
-          	
+      	else if (temperatura > 59 && temperatura < 65) 
+        {
+           EncenderSiete(500);
+           EncenderLed(500);
+           MoverServo(90);          	
         } 
-      	else if (temperatura > 64 && temperatura < 70) {
-            EncenderOcho(500);
-          	EncenderLed(500);
-          	MoverServo(90);
-          	
+      	else if (temperatura > 64 && temperatura < 70) 
+        {
+           EncenderOcho(500);
+           EncenderLed(500);
+           MoverServo(90);
         } 
-      	else {
-            EncenderNueve(500);
-          	EncenderLed(500);
-          	MoverServo(90);
+      	else 
+        {
+           EncenderNueve(500);
+           EncenderLed(500);
+           MoverServo(90);
         }
-      
-    
     }
-  if (contador == 0) {
-    digitalWrite(F, LOW);
-    digitalWrite(A, LOW);
-    digitalWrite(B, LOW);
-    digitalWrite(E, LOW);
-    digitalWrite(D, LOW);
-    digitalWrite(C, LOW);
-    digitalWrite(G, LOW);
-    digitalWrite(13, LOW);
-    digitalWrite(12, LOW);
+  if (contador == 0) 
+  {
+    ApagarTodos(500);
   }
   
 }
