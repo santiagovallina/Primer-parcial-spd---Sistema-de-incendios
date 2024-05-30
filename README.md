@@ -7,7 +7,7 @@
 
 ------------
 
-###Alumno
+### Alumno
 - Santiago Julián Vallina
 
 
@@ -144,7 +144,7 @@ void EncenderLed(int tiempo)
 
 ------------
 
-####Encender números del display
+#### Encender números del display
 
 ```cpp
 void EncenderCero(int tiempo)
@@ -297,7 +297,7 @@ void EncenderNueve(int tiempo)
 
 ------------
 
-####Apagar display
+#### Apagar display
 
 ```cpp
 void ApagarTodos(int tiempo) 
