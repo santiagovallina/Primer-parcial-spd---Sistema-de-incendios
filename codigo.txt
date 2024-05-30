@@ -41,6 +41,12 @@ void EncenderSiete(int tiempo);
 void EncenderOcho(int tiempo);
 void EncenderNueve(int tiempo);
 void ApagarTodos(int tiempo);
+void EncenderA(int tiempo);
+void EncenderB(int tiempo);
+void EncenderC(int tiempo);
+void EncenderD(int tiempo);
+void EncenderE(int tiempo);
+
 void MoverServo(int posicion);
 Servo servo1;
 
@@ -94,6 +100,8 @@ void loop()
     {
        lecturaDelSensor = analogRead(A0);
        temperatura = map(lecturaDelSensor, 20, 358, -40, 125);
+       Serial.println("La temperatura es");
+       Serial.println(temperatura);
         
        if (temperatura < 30) 
         {
@@ -117,27 +125,27 @@ void loop()
         } 
       	else if (temperatura > 49 && temperatura < 55) 
         {
-           EncenderCinco(1000);
+           EncenderA(1000);
         } 
       	else if (temperatura > 54 && temperatura < 60) 
         {
-           EncenderSeis(1000);
+           EncenderB(1000);
         } 
       	else if (temperatura > 59 && temperatura < 65) 
         {
-           EncenderSiete(500);
+           EncenderC(1000);
            EncenderLed(500);
            MoverServo(90);          	
         } 
       	else if (temperatura > 64 && temperatura < 70) 
         {
-           EncenderOcho(500);
+           EncenderD(1000);
            EncenderLed(500);
            MoverServo(90);
         } 
       	else 
         {
-           EncenderNueve(500);
+           EncenderE(1000);
            EncenderLed(500);
            MoverServo(90);
         }
@@ -327,4 +335,81 @@ void ApagarTodos(int tiempo)
     digitalWrite(G, LOW);
     digitalWrite(13, LOW);
     digitalWrite(12, LOW);
+}
+
+
+void EncenderA(int tiempo)
+{
+  digitalWrite(A, HIGH);
+  digitalWrite(B, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(G, HIGH);
+  delay(tiempo);
+  digitalWrite(A, LOW);
+  digitalWrite(B, LOW);
+  digitalWrite(C, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(G, LOW);
+}
+
+void EncenderB(int tiempo)
+{
+  digitalWrite(C, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(G, HIGH);
+  digitalWrite(D, HIGH);
+  delay(tiempo);
+  digitalWrite(C, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(G, LOW);
+  digitalWrite(D, LOW);
+}
+
+void EncenderC(int tiempo)
+{
+  digitalWrite(A, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(F, HIGH);
+  delay(tiempo);
+  digitalWrite(A, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(G, LOW);
+}
+
+void EncenderD(int timepo)
+{
+  digitalWrite(B, HIGH);
+  digitalWrite(C, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(G, HIGH);
+  delay(tiempo);
+  digitalWrite(B, LOW);
+  digitalWrite(C, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(G, LOW);
+}
+
+void EncenderE(int timepo)
+{
+  digitalWrite(A, HIGH);
+  digitalWrite(D, HIGH);
+  digitalWrite(E, HIGH);
+  digitalWrite(F, HIGH);
+  digitalWrite(G, HIGH);
+  delay(tiempo);
+  digitalWrite(A, LOW);
+  digitalWrite(D, LOW);
+  digitalWrite(E, LOW);
+  digitalWrite(F, LOW);
+  digitalWrite(G, LOW);
 }
